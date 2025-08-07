@@ -1,10 +1,7 @@
 name: Macos Compile
 
 on:
-  push:
-    branches: [ "*" ]
-  pull_request:
-    branches: [ "master" ]
+  workflow_dispatch:
 
 jobs:
   build:
