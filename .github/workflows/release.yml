@@ -1,9 +1,7 @@
 name: Publish Binaries
 
 on:
-  push:
-    branches:
-      - main  # Change this to match your repository's default branch
+  workflow_dispatch:
 
 jobs:
   build_linux:
