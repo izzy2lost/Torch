@@ -43,15 +43,22 @@ jobs:
     - name: Make gradlew executable
       run: chmod +x android/gradlew
       
+    - name: Copy assets (if needed)
+      run: |
+        cd android
+        if [ -f "copy_assets.bat" ]; then
+          echo "Asset copy scripts found"
+        fi
+      
     - name: Build Debug APK
       run: |
         cd android
-        ./gradlew assembleDebug
+        ./gradlew assembleDebug --stacktrace
     
     - name: Build Release APK
       run: |
         cd android
-        ./gradlew assembleRelease
+        ./gradlew assembleRelease --stacktrace
     
     - name: Upload Debug APK
       uses: actions/upload-artifact@v4
