@@ -214,6 +214,98 @@ void Companion::Init(const ExportType type) {
     this->Process();
 }
 
+void Companion::InitFactoriesOnly(const ExportType type) {
+    spdlog::set_level(spdlog::level::debug);
+    spdlog::set_pattern("[%Y-%m-%d %H:%M:%S.%e] [%l] %v");
+
+    this->gConfig.exporterType = type;
+    this->RegisterFactory("BLOB", std::make_shared<BlobFactory>());
+    this->RegisterFactory("TEXTURE", std::make_shared<TextureFactory>());
+    this->RegisterFactory("VTX", std::make_shared<VtxFactory>());
+    this->RegisterFactory("MTX", std::make_shared<MtxFactory>());
+    this->RegisterFactory("F32", std::make_shared<FloatFactory>());
+    this->RegisterFactory("INC", std::make_shared<IncludeFactory>());
+    this->RegisterFactory("LIGHTS", std::make_shared<LightsFactory>());
+    this->RegisterFactory("GFX", std::make_shared<DListFactory>());
+    this->RegisterFactory("VEC3F", std::make_shared<Vec3fFactory>());
+    this->RegisterFactory("VEC3S", std::make_shared<Vec3sFactory>());
+    this->RegisterFactory("ARRAY", std::make_shared<GenericArrayFactory>());
+    this->RegisterFactory("ASSET_ARRAY", std::make_shared<AssetArrayFactory>());
+    this->RegisterFactory("VP", std::make_shared<ViewportFactory>());
+    this->RegisterFactory("COMPRESSED_TEXTURE", std::make_shared<CompressedTextureFactory>());
+
+#ifdef SM64_SUPPORT
+    this->RegisterFactory("SM64:DIALOG", std::make_shared<SM64::DialogFactory>());
+    this->RegisterFactory("SM64:TEXT", std::make_shared<SM64::TextFactory>());
+    this->RegisterFactory("SM64:DICTIONARY", std::make_shared<SM64::DictionaryFactory>());
+    this->RegisterFactory("SM64:ANIM", std::make_shared<SM64::AnimationFactory>());
+    this->RegisterFactory("SM64:BEHAVIOR_SCRIPT", std::make_shared<SM64::BehaviorScriptFactory>());
+    this->RegisterFactory("SM64:COLLISION", std::make_shared<SM64::CollisionFactory>());
+    this->RegisterFactory("SM64:GEO_LAYOUT", std::make_shared<SM64::GeoLayoutFactory>());
+    this->RegisterFactory("SM64:LEVEL_SCRIPT", std::make_shared<SM64::LevelScriptFactory>());
+    this->RegisterFactory("SM64:MACRO", std::make_shared<SM64::MacroFactory>());
+    this->RegisterFactory("SM64:MOVTEX_QUAD", std::make_shared<SM64::MovtexQuadFactory>());
+    this->RegisterFactory("SM64:MOVTEX", std::make_shared<SM64::MovtexFactory>());
+    this->RegisterFactory("SM64:PAINTING", std::make_shared<SM64::PaintingFactory>());
+    this->RegisterFactory("SM64:PAINTING_MAP", std::make_shared<SM64::PaintingMapFactory>());
+    this->RegisterFactory("SM64:TRAJECTORY", std::make_shared<SM64::TrajectoryFactory>());
+    this->RegisterFactory("SM64:WATER_DROPLET", std::make_shared<SM64::WaterDropletFactory>());
+#endif
+
+#ifdef MK64_SUPPORT
+    this->RegisterFactory("MK64:COURSE_VTX", std::make_shared<MK64::CourseVtxFactory>());
+    this->RegisterFactory("MK64:TRACK_PATH", std::make_shared<MK64::PathsFactory>());
+    this->RegisterFactory("MK64:TRACK_SECTIONS", std::make_shared<MK64::TrackSectionsFactory>());
+    this->RegisterFactory("MK64:SPAWN_DATA", std::make_shared<MK64::SpawnDataFactory>());
+    this->RegisterFactory("MK64:UNK_SPAWN_DATA", std::make_shared<MK64::UnkSpawnDataFactory>());
+    this->RegisterFactory("MK64:DRIVING_BEHAVIOUR", std::make_shared<MK64::DrivingBehaviourFactory>());
+    this->RegisterFactory("MK64:ITEM_CURVE", std::make_shared<MK64::ItemCurveFactory>()); // Item curve for decomp only
+    this->RegisterFactory("MK64:METADATA", std::make_shared<MK64::CourseMetadataFactory>());
+#endif
+
+#ifdef SF64_SUPPORT
+    this->RegisterFactory("SF64:ANIM", std::make_shared<SF64::AnimFactory>());
+    this->RegisterFactory("SF64:SKELETON", std::make_shared<SF64::SkeletonFactory>());
+    this->RegisterFactory("SF64:MESSAGE", std::make_shared<SF64::MessageFactory>());
+    this->RegisterFactory("SF64:MSG_TABLE", std::make_shared<SF64::MessageLookupFactory>());
+    this->RegisterFactory("SF64:SCRIPT", std::make_shared<SF64::ScriptFactory>());
+    this->RegisterFactory("SF64:HITBOX", std::make_shared<SF64::HitboxFactory>());
+    this->RegisterFactory("SF64:ENVIRONMENT", std::make_shared<SF64::EnvironmentFactory>());
+    this->RegisterFactory("SF64:OBJECT_INIT", std::make_shared<SF64::ObjInitFactory>());
+    this->RegisterFactory("SF64:COLPOLY", std::make_shared<SF64::ColPolyFactory>());
+    this->RegisterFactory("SF64:TRIANGLE", std::make_shared<SF64::TriangleFactory>());
+#endif
+
+#ifdef FZERO_SUPPORT
+    this->RegisterFactory("FZX:COURSE", std::make_shared<FZX::CourseFactory>());
+    this->RegisterFactory("FZX:GHOST", std::make_shared<FZX::GhostRecordFactory>());
+#endif
+
+#ifdef MARIO_ARTIST_SUPPORT
+    this->RegisterFactory("MA:MA2D1", std::make_shared<MA::MA2D1Factory>());
+#endif
+
+#ifdef NAUDIO_SUPPORT
+    this->RegisterFactory("NAUDIO:V0:AUDIO_HEADER", std::make_shared<AudioHeaderFactory>());
+    this->RegisterFactory("NAUDIO:V0:SEQUENCE", std::make_shared<SequenceFactory>());
+    this->RegisterFactory("NAUDIO:V0:SAMPLE", std::make_shared<SampleFactory>());
+    this->RegisterFactory("NAUDIO:V0:BANK", std::make_shared<BankFactory>());
+
+    this->RegisterFactory("NAUDIO:V1:AUDIO_SETUP", std::make_shared<AudioContextFactory>());
+    this->RegisterFactory("NAUDIO:V1:AUDIO_TABLE", std::make_shared<AudioTableFactory>());
+    this->RegisterFactory("NAUDIO:V1:SOUND_FONT", std::make_shared<SoundFontFactory>());
+    this->RegisterFactory("NAUDIO:V1:INSTRUMENT", std::make_shared<InstrumentFactory>());
+    this->RegisterFactory("NAUDIO:V1:DRUM", std::make_shared<DrumFactory>());
+    this->RegisterFactory("NAUDIO:V1:SAMPLE", std::make_shared<NSampleFactory>());
+    this->RegisterFactory("NAUDIO:V1:ENVELOPE", std::make_shared<EnvelopeFactory>());
+    this->RegisterFactory("NAUDIO:V1:ADPCM_LOOP", std::make_shared<ADPCMLoopFactory>());
+    this->RegisterFactory("NAUDIO:V1:ADPCM_BOOK", std::make_shared<ADPCMBookFactory>());
+    this->RegisterFactory("NAUDIO:V1:SEQUENCE", std::make_shared<NSequenceFactory>());
+#endif
+
+    // NOTE: This method does NOT call Process() - that must be called separately
+}
+
 void Companion::ParseEnums(std::string& header) {
     std::ifstream file(header);
 

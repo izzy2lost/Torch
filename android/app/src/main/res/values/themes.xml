@@ -1,0 +1,20 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme - Neon Yellow and Black -->
+    <style name="Theme.TorchConverter" parent="Theme.AppCompat.DayNight">
+        <!-- Primary brand color - Neon Yellow -->
+        <item name="colorPrimary">@color/neon_yellow</item>
+        <item name="colorPrimaryVariant">@color/neon_yellow_dark</item>
+        <item name="colorOnPrimary">@color/black</item>
+        <!-- Secondary brand color -->
+        <item name="colorSecondary">@color/neon_yellow_bright</item>
+        <item name="colorSecondaryVariant">@color/neon_yellow</item>
+        <item name="colorOnSecondary">@color/black</item>
+        <!-- Background colors -->
+        <item name="android:windowBackground">@color/black</item>
+        <item name="colorSurface">@color/black_light</item>
+        <item name="colorOnSurface">@color/primary_text</item>
+        <!-- Status bar color - Black -->
+        <item name="android:statusBarColor" tools:targetApi="l">@color/black</item>
+        <item name="android:windowLightStatusBar" tools:targetApi="m">false</item>
+    </style>
+</resources>

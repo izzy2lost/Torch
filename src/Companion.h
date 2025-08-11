@@ -136,6 +136,7 @@ public:
                        Companion(rom, otr, debug, false, srcDir, destPath) {}
 
     void Init(ExportType type);
+    void InitFactoriesOnly(ExportType type);  // New method to only register factories
 
     bool NodeHasChanges(const std::string& string);
 

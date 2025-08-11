@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Neon yellow and black theme -->
+    <color name="neon_yellow">#FFFF00</color>
+    <color name="neon_yellow_bright">#FFFF33</color>
+    <color name="neon_yellow_dark">#CCCC00</color>
+    <color name="black">#FF000000</color>
+    <color name="black_light">#FF1A1A1A</color>
+    <color name="black_dark">#FF000000</color>
+    
+    <!-- Primary theme colors -->
+    <color name="primary">#FFFF00</color>
+    <color name="primary_variant">#CCCC00</color>
+    <color name="secondary">#FFFF33</color>
+    <color name="secondary_variant">#FFFF66</color>
+    
+    <!-- Basic colors -->
+    <color name="white">#FFFFFFFF</color>
+    <color name="gray_light">#FF333333</color>
+    <color name="gray_dark">#FF1A1A1A</color>
+    
+    <!-- Text colors for dark theme -->
+    <color name="primary_text">#FFFFFFFF</color>
+    <color name="secondary_text">#FFCCCCCC</color>
+</resources>
