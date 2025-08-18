@@ -34,7 +34,6 @@ public class MainActivity extends AppCompatActivity {
     private static final String TAG = "TorchConverter";
     
     private Button selectRomButton;
-    private Button selectConfigButton;
     private Button selectOutputButton;
     private Button convertButton;
     private TextView statusText;
@@ -116,7 +115,6 @@ public class MainActivity extends AppCompatActivity {
     
     private void initViews() {
         selectRomButton = findViewById(R.id.selectRomButton);
-        selectConfigButton = findViewById(R.id.selectConfigButton);
         selectOutputButton = findViewById(R.id.selectOutputButton);
         convertButton = findViewById(R.id.convertButton);
         statusText = findViewById(R.id.statusText);
@@ -131,7 +129,7 @@ public class MainActivity extends AppCompatActivity {
         progressBar.setVisibility(View.GONE);
         progressText.setVisibility(View.GONE);
         
-        // Set up radio group listener
+        // Set up radio group listener to automatically load config
         configRadioGroup.setOnCheckedChangeListener((group, checkedId) -> {
             if (checkedId == R.id.starshipRadio) {
                 selectedConfigType = "starship";
@@ -140,18 +138,16 @@ public class MainActivity extends AppCompatActivity {
                 selectedConfigType = "spaghetti";
                 Log.i(TAG, "Selected configuration: Spaghetti Kart (Mario Kart 64)");
             }
-            // Reset config selection when changing configuration type
-            selectedConfigUri = null;
-            configDirPath = null;
-            configStatusText.setText("Config: Not selected");
-            // Keep output directory selection when changing config type
-            updateConvertButtonState();
+            // Automatically load the selected configuration
+            autoLoadSelectedConfig();
         });
+        
+        // Load default config on startup
+        autoLoadSelectedConfig();
     }
     
     private void setupClickListeners() {
         selectRomButton.setOnClickListener(v -> openRomPicker());
-        selectConfigButton.setOnClickListener(v -> openConfigPicker());
         selectOutputButton.setOnClickListener(v -> openOutputPicker());
         convertButton.setOnClickListener(v -> convertRom());
     }
@@ -165,9 +161,23 @@ public class MainActivity extends AppCompatActivity {
         romPickerLauncher.launch(intent);
     }
     
-    private void openConfigPicker() {
-        // Load the selected configuration (starship or spaghetti)
-        handleSelectedConfig();
+    private void autoLoadSelectedConfig() {
+        // Automatically load the selected configuration (starship or spaghetti)
+        try {
+            configDirPath = copyBundledAssetsToInternalStorage();
+            
+            String configName = selectedConfigType.equals("starship") ? 
+                "Starship (Star Fox 64)" : "Spaghetti Kart (Mario Kart 64)";
+            configStatusText.setText("Config: " + configName + " (auto-loaded)");
+            updateConvertButtonState();
+            
+            Log.i(TAG, "Auto-loaded configuration: " + configName);
+            
+        } catch (IOException e) {
+            Log.e(TAG, "Error auto-loading config", e);
+            configStatusText.setText("Config: Failed to load");
+            Toast.makeText(this, "Error loading configuration", Toast.LENGTH_SHORT).show();
+        }
     }
     
     private void openOutputPicker() {
@@ -518,7 +528,7 @@ public class MainActivity extends AppCompatActivity {
     }
     
     private void updateConvertButtonState() {
-        // Convert button is enabled when ROM and config are selected
+        // Convert button is enabled when ROM is selected (config auto-loads)
         // Output directory is optional (defaults to app directory)
         convertButton.setEnabled(romFilePath != null && configDirPath != null);
     }

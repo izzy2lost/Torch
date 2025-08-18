@@ -87,17 +87,6 @@
         android:elevation="4dp" />
 
     <Button
-        android:id="@+id/selectConfigButton"
-        android:layout_width="match_parent"
-        android:layout_height="56dp"
-        android:text="Load Configuration Files"
-        android:textSize="16sp"
-        android:layout_marginBottom="16dp"
-        android:background="@drawable/rounded_button"
-        android:textColor="@color/black"
-        android:elevation="4dp" />
-
-    <Button
         android:id="@+id/selectOutputButton"
         android:layout_width="match_parent"
         android:layout_height="56dp"
@@ -112,7 +101,7 @@
         android:id="@+id/convertButton"
         android:layout_width="match_parent"
         android:layout_height="56dp"
-        android:text="Convert to O2R"
+        android:text="Generate O2R"
         android:textSize="16sp"
         android:layout_marginBottom="24dp"
         android:background="@drawable/rounded_button"
