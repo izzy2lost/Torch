@@ -210,8 +210,9 @@ void Companion::Init(const ExportType type) {
     this->RegisterFactory("NAUDIO:V1:ADPCM_BOOK", std::make_shared<ADPCMBookFactory>());
     this->RegisterFactory("NAUDIO:V1:SEQUENCE", std::make_shared<NSequenceFactory>());
 #endif
-
+#ifndef __EMSCRIPTEN__ // We call this manually
     this->Process();
+#endif
 }
 
 void Companion::InitFactoriesOnly(const ExportType type) {
@@ -476,6 +477,8 @@ void Companion::ParseCurrentFileConfig(YAML::Node node) {
                     this->gCurrentDirectory = currentDirectory;
                     this->gCurrentExternalFiles = currentExternalFiles;
                     this->gFileHeader.clear();
+                } else {
+                    SPDLOG_INFO("Skipping external file {} as it has already been processed", externalFileName);
                 }
             }
         }
@@ -1030,6 +1033,7 @@ void Companion::ProcessFile(YAML::Node root) {
             std::string buffer = stream.str();
 
             if(buffer.empty()) {
+                SPDLOG_WARN("No data to write for {}", this->gCurrentFile);
                 return;
             }
 
@@ -1040,6 +1044,7 @@ void Companion::ProcessFile(YAML::Node root) {
             }
 
             std::ofstream file(output, std::ios::binary);
+            SPDLOG_INFO("Writing {} to {}", this->gCurrentFile, output);
 
             if(this->gConfig.exporterType == ExportType::Header) {
                 fs::path entryPath = this->gCurrentFile;
@@ -1128,7 +1133,7 @@ void Companion::Process() {
 
                     auto hash = this->gCartridge->GetHash();
 
-                    SPDLOG_INFO("ROM decompressed to {}", hash);
+                    SPDLOG_CRITICAL("ROM decompressed to {}", hash);
 
                     if (hash != target) {
                         throw std::runtime_error("Hash mismatch");
@@ -1294,22 +1299,24 @@ void Companion::Process() {
 
     this->ParseHash();
 
-    SPDLOG_INFO("------------------------------------------------");
+    SPDLOG_CRITICAL("------------------------------------------------");
     spdlog::set_pattern(line);
 
-    SPDLOG_INFO("Starting Torch...");
+    SPDLOG_CRITICAL("Starting Torch...");
 
     if(this->gConfig.parseMode == ParseMode::Default) {
-        SPDLOG_INFO("Game: {}", this->gCartridge->GetGameTitle());
-        SPDLOG_INFO("CRC: {}", this->gCartridge->GetCRC());
-        SPDLOG_INFO("Version: {}", this->gCartridge->GetVersion());
-        SPDLOG_INFO("Country: [{}]", this->gCartridge->GetCountryCode());
-        SPDLOG_INFO("Hash: {}", this->gCartridge->GetHash());
-        SPDLOG_INFO("Assets: {}", this->gAssetPath);
+        SPDLOG_CRITICAL("Game: {}", this->gCartridge->GetGameTitle());
+        SPDLOG_CRITICAL("CRC: {}", this->gCartridge->GetCRC());
+        SPDLOG_CRITICAL("Version: {}", this->gCartridge->GetVersion());
+        SPDLOG_CRITICAL("Country: [{}]", this->gCartridge->GetCountryCode());
+        SPDLOG_CRITICAL("Hash: {}", this->gCartridge->GetHash());
+        SPDLOG_CRITICAL("Assets: {}", this->gAssetPath);
     } else {
-        SPDLOG_INFO("Mode: Directory");
-        SPDLOG_INFO("Directory: {}", rom["folder"].as<std::string>());
+        SPDLOG_CRITICAL("Mode: Directory");
+        SPDLOG_CRITICAL("Directory: {}", rom["folder"].as<std::string>());
     }
+
+    SPDLOG_CRITICAL("------------------------------------------------");
 
     AudioManager::Instance = new AudioManager();
     BinaryWrapper* wrapper = nullptr;
@@ -1368,7 +1375,7 @@ void Companion::Process() {
     }
 
     if(wrapper != nullptr) {
-        SPDLOG_INFO("Writing version file");
+        SPDLOG_CRITICAL("Writing version file");
         wrapper->AddFile("version", vWriter.ToVector());
         vWriter.Close();
         wrapper->Close();
@@ -1382,10 +1389,10 @@ void Companion::Process() {
     auto end = duration_cast<milliseconds>(system_clock::now().time_since_epoch());
     auto level = spdlog::get_level();
     spdlog::set_level(spdlog::level::info);
-    SPDLOG_INFO("Done! Took {}ms", end.count() - start.count());
+    SPDLOG_CRITICAL("Done! Took {}ms", end.count() - start.count());
+    SPDLOG_CRITICAL("------------------------------------------------");
     spdlog::set_level(level);
     spdlog::set_pattern(regular);
-    SPDLOG_INFO("------------------------------------------------");
 
     Decompressor::ClearCache();
     this->gCartridge = nullptr;
@@ -1397,10 +1404,10 @@ void Companion::Pack(const std::string& folder, const std::string& output, const
     spdlog::set_level(spdlog::level::debug);
     spdlog::set_pattern("[%Y-%m-%d %H:%M:%S.%e] [%l] %v");
 
-    SPDLOG_INFO("------------------------------------------------");
+    SPDLOG_CRITICAL("------------------------------------------------");
 
-    SPDLOG_INFO("Starting Torch...");
-    SPDLOG_INFO("Scanning {}", folder);
+    SPDLOG_CRITICAL("Starting Torch...");
+    SPDLOG_CRITICAL("Scanning {}", folder);
 
     auto start = duration_cast<milliseconds>(system_clock::now().time_since_epoch());
     std::unordered_map<std::string, std::vector<char>> files;
@@ -1435,14 +1442,14 @@ void Companion::Pack(const std::string& folder, const std::string& output, const
         // Remove parent folder
         normalized = normalized.substr(folder.length() + 1);
         wrapper->AddFile(normalized, data);
-        SPDLOG_INFO("> Added {}", normalized);
+        SPDLOG_CRITICAL("> Added {}", normalized);
     }
 
     auto end = duration_cast<milliseconds>(system_clock::now().time_since_epoch());
-    SPDLOG_INFO("Done! Took {}ms", end.count() - start.count());
-    SPDLOG_INFO("Exported to {}", output);
+    SPDLOG_CRITICAL("Done! Took {}ms", end.count() - start.count());
+    SPDLOG_CRITICAL("Exported to {}", output);
     spdlog::set_pattern("[%Y-%m-%d %H:%M:%S.%e] [%l] %v");
-    SPDLOG_INFO("------------------------------------------------");
+    SPDLOG_CRITICAL("------------------------------------------------");
 
     wrapper->Close();
 }
@@ -1470,7 +1477,7 @@ std::optional<std::tuple<std::string, YAML::Node>> Companion::RegisterAsset(cons
 
 void Companion::RegisterFactory(const std::string& type, const std::shared_ptr<BaseFactory>& factory) {
     this->gFactories[type] = factory;
-    SPDLOG_DEBUG("Registered factory for {}", type);
+    SPDLOG_INFO("Registered factory for {}", type);
 }
 
 std::optional<std::shared_ptr<BaseFactory>> Companion::GetFactory(const std::string &type) {
