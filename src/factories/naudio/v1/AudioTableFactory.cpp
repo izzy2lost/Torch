@@ -109,7 +109,7 @@ std::optional<std::shared_ptr<IParsedData>> AudioTableFactory::parse(std::vector
     auto format = GetSafeNode<std::string>(node, "format");
     std::transform(format.begin(), format.end(), format.begin(), ::toupper);
 
-    if(!gTableTypes.contains(format)) {
+    if (gTableTypes.find(format) == gTableTypes.end()) {
         return std::nullopt;
     }
 

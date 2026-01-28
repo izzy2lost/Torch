@@ -1,0 +1,105 @@
+:config:
+  autopads: false
+  compression:
+    offset: 0x114750
+  segments:
+    - [ 0x4, 0x114750 ]
+  header:
+    header:
+      - '#include "sm64.h"'
+      - '#include "sparkle/geo.h"'
+
+sparkles_seg4_vertex_04027450:
+  type: VTX
+  count: 4
+  offset: 0x27450
+  symbol: sparkles_seg4_vertex_04027450
+
+sparkle_0:
+  type: TEXTURE
+  size: 2048
+  width: 32
+  height: 32
+  offset: 0x27490
+  format: RGBA16
+  symbol: sparkles_seg4_texture_04027490
+
+sparkle_1:
+  type: TEXTURE
+  size: 2048
+  width: 32
+  height: 32
+  offset: 0x27C90
+  format: RGBA16
+  symbol: sparkles_seg4_texture_04027C90
+
+sparkle_2:
+  type: TEXTURE
+  size: 2048
+  width: 32
+  height: 32
+  offset: 0x28490
+  format: RGBA16
+  symbol: sparkles_seg4_texture_04028490
+
+sparkle_3:
+  type: TEXTURE
+  size: 2048
+  width: 32
+  height: 32
+  offset: 0x28C90
+  format: RGBA16
+  symbol: sparkles_seg4_texture_04028C90
+
+sparkle_4:
+  type: TEXTURE
+  size: 2048
+  width: 32
+  height: 32
+  offset: 0x29490
+  format: RGBA16
+  symbol: sparkles_seg4_texture_04029490
+
+sparkle_5:
+  type: TEXTURE
+  size: 2048
+  width: 32
+  height: 32
+  offset: 0x29C90
+  format: RGBA16
+  symbol: sparkles_seg4_texture_04029C90
+
+sparkles_seg4_dl_0402A490:
+  type: GFX
+  offset: 0x2A490
+  symbol: sparkles_seg4_dl_0402A490
+
+sparkles_seg4_dl_0402A4F8:
+  type: GFX
+  offset: 0x2A4F8
+  symbol: sparkles_seg4_dl_0402A4F8
+
+sparkles_seg4_dl_0402A510:
+  type: GFX
+  offset: 0x2A510
+  symbol: sparkles_seg4_dl_0402A510
+
+sparkles_seg4_dl_0402A528:
+  type: GFX
+  offset: 0x2A528
+  symbol: sparkles_seg4_dl_0402A528
+
+sparkles_seg4_dl_0402A540:
+  type: GFX
+  offset: 0x2A540
+  symbol: sparkles_seg4_dl_0402A540
+
+sparkles_seg4_dl_0402A558:
+  type: GFX
+  offset: 0x2A558
+  symbol: sparkles_seg4_dl_0402A558
+
+sparkles_seg4_dl_0402A570:
+  type: GFX
+  offset: 0x2A570
+  symbol: sparkles_seg4_dl_0402A570

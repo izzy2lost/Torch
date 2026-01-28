@@ -1,0 +1,9 @@
+00_organ_1:
+  type: NAUDIO:V0:SAMPLE
+  id: 216
+01_organ_1_lq:
+  type: NAUDIO:V0:SAMPLE
+  id: 217
+02_boys_choir:
+  type: NAUDIO:V0:SAMPLE
+  id: 218

@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.22.1)
 project(torch)
 include(FetchContent)
 
-set(CMAKE_CXX_STANDARD 20)
+set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_C_STANDARD 11)
 
 # Optimization flags for release builds
@@ -135,6 +135,9 @@ FetchContent_Declare(
     GIT_TAG 7e635fca68d014934b4af8a1cf874f63989352b7
 )
 FetchContent_MakeAvailable(spdlog)
+if(TARGET spdlog)
+    target_compile_definitions(spdlog PUBLIC FMT_USE_CONSTEXPR=0)
+endif()
 
 # Fetch tinyxml2
 set(tinyxml2_BUILD_TESTING OFF)

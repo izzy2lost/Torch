@@ -1,0 +1,66 @@
+:config:
+  autopads: false
+  compression:
+    offset: 0x1F0530
+  segments:
+    - [ 0x8, 0x1F0530 ]
+  header:
+    header:
+      - '#include "sm64.h"'
+      - '#include "blue_coin_switch/geo.h"'
+
+blue_coin_switch_seg8_lights_08000000:
+  type: LIGHTS
+  size: 24
+  offset: 0x0
+  symbol: blue_coin_switch_seg8_lights_08000000
+
+blue_coin_switch_side:
+  type: TEXTURE
+  size: 1024
+  width: 32
+  height: 16
+  offset: 0x18
+  format: RGBA16
+  symbol: blue_coin_switch_seg8_texture_08000018
+
+blue_coin_switch_top:
+  type: TEXTURE
+  size: 2048
+  width: 32
+  height: 32
+  offset: 0x418
+  format: RGBA16
+  symbol: blue_coin_switch_seg8_texture_08000418
+
+blue_coin_switch_seg8_vertex_08000C18:
+  type: VTX
+  count: 16
+  offset: 0xC18
+  symbol: blue_coin_switch_seg8_vertex_08000C18
+
+blue_coin_switch_seg8_vertex_08000D18:
+  type: VTX
+  count: 4
+  offset: 0xD18
+  symbol: blue_coin_switch_seg8_vertex_08000D18
+
+blue_coin_switch_seg8_dl_08000D58:
+  type: GFX
+  offset: 0xD58
+  symbol: blue_coin_switch_seg8_dl_08000D58
+
+blue_coin_switch_seg8_dl_08000DD0:
+  type: GFX
+  offset: 0xDD0
+  symbol: blue_coin_switch_seg8_dl_08000DD0
+
+blue_coin_switch_seg8_dl_08000E08:
+  type: GFX
+  offset: 0xE08
+  symbol: blue_coin_switch_seg8_dl_08000E08
+
+blue_coin_switch_seg8_collision_08000E98:
+  type: SM64:COLLISION
+  offset: 0xE98
+  symbol: blue_coin_switch_seg8_collision_08000E98

@@ -1,0 +1,29 @@
+:config:
+  autopads: false
+  compression:
+    offset: 0x1FF740
+  segments:
+    - [ 0x3, 0x1FF740 ]
+  header:
+    header:
+      - '#include "sm64.h"'
+
+pebble_seg3_vertex_0301C2C0:
+  type: VTX
+  count: 4
+  offset: 0x1C2C0
+  symbol: pebble_seg3_vertex_0301C2C0
+
+pebble:
+  type: TEXTURE
+  size: 2048
+  width: 32
+  height: 32
+  offset: 0x1C300
+  format: RGBA16
+  symbol: pebble_seg3_texture_0301C300
+
+pebble_seg3_dl_0301CB00:
+  type: GFX
+  offset: 0x1CB00
+  symbol: pebble_seg3_dl_0301CB00

@@ -383,7 +383,7 @@ std::optional<ParseResultData> Companion::ParseNode(YAML::Node& node, std::strin
 
     bool executeDef = true;
     std::optional<std::shared_ptr<IParsedData>> result;
-    if(this->gConfig.modding && impl->SupportModdedAssets() && this->gModdedAssetPaths.contains(name)) {
+    if (this->gConfig.modding && impl->SupportModdedAssets() && this->gModdedAssetPaths.find(name) != this->gModdedAssetPaths.end()) {
         auto path = fs::path(this->gConfig.moddingPath) / this->gModdedAssetPaths[name];
         if(!exists(path)) {
             SPDLOG_ERROR("Modded asset {} not found", this->gModdedAssetPaths[name]);
@@ -449,13 +449,13 @@ void Companion::ParseCurrentFileConfig(YAML::Node node) {
                 }
 
                 std::string externalFileName = (this->gSourceDirectory / externalFile.as<std::string>()).string();
-                if (std::filesystem::relative(externalFileName, this->gAssetPath).string().starts_with("../")) {
+                if (std::filesystem::relative(externalFileName, this->gAssetPath).string().rfind("../", 0) == 0) {
                     throw std::runtime_error("External File " + externalFileName + " Not In Asset Directory " + this->gAssetPath);
                 } else if (std::filesystem::relative(externalFileName, this->gAssetPath).string() == "") {
                     throw std::runtime_error("External File " + externalFileName + " Not In Asset Directory " + this->gAssetPath);
                 }
 
-                if (!this->gAddrMap.contains(externalFileName)) {
+                if (this->gAddrMap.find(externalFileName) == this->gAddrMap.end()) {
                     SPDLOG_INFO("Dependency on external file {}. Now processing {}", externalFileName, externalFileName);
                     auto currentFile = this->gCurrentFile;
                     auto currentDirectory = this->gCurrentDirectory;
@@ -466,7 +466,7 @@ void Companion::ParseCurrentFileConfig(YAML::Node node) {
 
                     YAML::Node root = YAML::LoadFile(externalFileName);
 
-                    if (!this->gProcessedFiles.contains(this->gCurrentFile)) {
+                    if (this->gProcessedFiles.find(this->gCurrentFile) == this->gProcessedFiles.end()) {
                         ProcessFile(root);
                         this->gProcessedFiles.insert(this->gCurrentFile);
                     }
@@ -1368,7 +1368,7 @@ void Companion::Process() {
         this->gCurrentDirectory = relative(entry.path(), this->gAssetPath).replace_extension("");
         this->gCurrentFile = yamlPath;
 
-        if (!this->gProcessedFiles.contains(this->gCurrentFile)) {
+        if (this->gProcessedFiles.find(this->gCurrentFile) == this->gProcessedFiles.end()) {
             ProcessFile(root);
             this->gProcessedFiles.insert(this->gCurrentFile);
         }
@@ -1481,7 +1481,7 @@ void Companion::RegisterFactory(const std::string& type, const std::shared_ptr<B
 }
 
 std::optional<std::shared_ptr<BaseFactory>> Companion::GetFactory(const std::string &type) {
-    if(!this->gFactories.contains(type)){
+    if (this->gFactories.find(type) == this->gFactories.end()) {
         return std::nullopt;
     }
 
@@ -1499,11 +1499,11 @@ std::optional<Table> Companion::SearchTable(uint32_t addr){
 }
 
 std::optional<std::string> Companion::GetEnumFromValue(const std::string& key, int32_t id) {
-    if(!this->gEnums.contains(key)){
+    if (this->gEnums.find(key) == this->gEnums.end()) {
         return std::nullopt;
     }
 
-    if(!this->gEnums[key].contains(id)){
+    if (this->gEnums[key].find(id) == this->gEnums[key].end()) {
         return std::nullopt;
     }
 
@@ -1514,15 +1514,15 @@ std::optional<std::uint32_t> Companion::GetFileOffsetFromSegmentedAddr(const uin
 
     auto segments = this->gConfig.segment;
 
-    if(segments.temporal.contains(segment)) {
+    if (segments.temporal.find(segment) != segments.temporal.end()) {
         return segments.temporal[segment];
     }
 
-    if(segments.local.contains(segment)) {
+    if (segments.local.find(segment) != segments.local.end()) {
         return segments.local[segment];
     }
 
-    if(segments.global.contains(segment)) {
+    if (segments.global.find(segment) != segments.global.end()) {
         return segments.global[segment];
     }
 
@@ -1531,7 +1531,7 @@ std::optional<std::uint32_t> Companion::GetFileOffsetFromSegmentedAddr(const uin
 
 uint32_t Companion::PatchVirtualAddr(uint32_t addr) {
     if (addr & 0x80000000) {
-        if (gVirtualAddrMap.contains(gCurrentFile)) {
+        if (gVirtualAddrMap.find(gCurrentFile) != gVirtualAddrMap.end()) {
             addr -= std::get<0>(gVirtualAddrMap[gCurrentFile]);
             addr += std::get<1>(gVirtualAddrMap[gCurrentFile]);
         }
@@ -1541,21 +1541,21 @@ uint32_t Companion::PatchVirtualAddr(uint32_t addr) {
 }
 
 std::optional<std::tuple<std::string, YAML::Node>> Companion::GetNodeByAddr(uint32_t addr){
-    if(!this->gAddrMap.contains(this->gCurrentFile)){
+    if (this->gAddrMap.find(this->gCurrentFile) == this->gAddrMap.end()) {
         return std::nullopt;
     }
 
     // HACK: Adjust address to rom address if virtual address
     addr = PatchVirtualAddr(addr);
 
-    if(!this->gAddrMap[this->gCurrentFile].contains(addr)){
+    if (this->gAddrMap[this->gCurrentFile].find(addr) == this->gAddrMap[this->gCurrentFile].end()) {
         for (auto &file : this->gCurrentExternalFiles) {
-            if (!this->gAddrMap.contains(file)) {
+            if (this->gAddrMap.find(file) == this->gAddrMap.end()) {
                 SPDLOG_WARN("GetNodeByAddr: External File {} Not Found.", file);
                 continue;
             }
 
-            if (!this->gAddrMap[file].contains(addr)) {
+            if (this->gAddrMap[file].find(addr) == this->gAddrMap[file].end()) {
                 continue;
             }
             return this->gAddrMap[file][addr];
@@ -1602,9 +1602,9 @@ std::string Companion::GetSymbolFromAddr(uint32_t address, bool validZero) {
 }
 
 std::optional<ParseResultData> Companion::GetParseDataByAddr(uint32_t addr) {
-    if(!this->gParseResults.contains(this->gCurrentFile)){
+    if (this->gParseResults.find(this->gCurrentFile) == this->gParseResults.end()) {
         for (auto &file : this->gCurrentExternalFiles) {
-            if (!this->gParseResults.contains(file)) {
+            if (this->gParseResults.find(file) == this->gParseResults.end()) {
                 SPDLOG_INFO("GetParseDataByAddr: External File {} Not Found.", file);
                 continue;
             }
@@ -1628,7 +1628,7 @@ std::optional<ParseResultData> Companion::GetParseDataByAddr(uint32_t addr) {
 }
 
 std::optional<ParseResultData> Companion::GetParseDataBySymbol(const std::string& symbol) {
-    if(!this->gParseResults.contains(this->gCurrentFile)){
+    if (this->gParseResults.find(this->gCurrentFile) == this->gParseResults.end()) {
         return std::nullopt;
     }
 
@@ -1647,7 +1647,7 @@ std::optional<ParseResultData> Companion::GetParseDataBySymbol(const std::string
 std::optional<std::vector<std::tuple<std::string, YAML::Node>>> Companion::GetNodesByType(const std::string& type){
     std::vector<std::tuple<std::string, YAML::Node>> nodes;
 
-    if(!this->gAddrMap.contains(this->gCurrentFile)){
+    if (this->gAddrMap.find(this->gCurrentFile) == this->gAddrMap.end()) {
         return nodes;
     }
 

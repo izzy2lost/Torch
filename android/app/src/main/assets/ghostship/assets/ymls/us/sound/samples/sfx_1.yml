@@ -1,0 +1,18 @@
+00_twirl:
+  type: NAUDIO:V0:SAMPLE
+  id: 0
+01_brushing:
+  type: NAUDIO:V0:SAMPLE
+  id: 1
+02_hand_touch:
+  type: NAUDIO:V0:SAMPLE
+  id: 2
+03_yoshi:
+  type: NAUDIO:V0:SAMPLE
+  id: 3
+04_plop:
+  type: NAUDIO:V0:SAMPLE
+  id: 4
+05_heavy_landing:
+  type: NAUDIO:V0:SAMPLE
+  id: 5

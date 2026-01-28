@@ -1,0 +1,35 @@
+:config:
+  autopads: false
+  compression:
+    offset: 0x188440
+  segments:
+    - [ 0x6, 0x188440 ]
+  header:
+    header:
+      - '#include "sm64.h"'
+      - '#include "yellow_sphere/geo.h"'
+
+yellow_sphere_seg6_vertex_0601EB48:
+  type: VTX
+  count: 4
+  offset: 0x1EB48
+  symbol: yellow_sphere_seg6_vertex_0601EB48
+
+yellow_sphere:
+  type: TEXTURE
+  size: 2048
+  width: 32
+  height: 32
+  offset: 0x1EB88
+  format: RGBA16
+  symbol: yellow_sphere_seg6_texture_0601EB88
+
+yellow_sphere_seg6_dl_0601F388:
+  type: GFX
+  offset: 0x1F388
+  symbol: yellow_sphere_seg6_dl_0601F388
+
+yellow_sphere_seg6_dl_0601F3C0:
+  type: GFX
+  offset: 0x1F3C0
+  symbol: yellow_sphere_seg6_dl_0601F3C0

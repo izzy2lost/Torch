@@ -1,0 +1,11 @@
+:config:
+  external_files:
+    - "assets/ymls/jp/actors/wiggler.yml"
+  autopads: false
+  segments:
+    - [0x0C,  0x186370]
+
+wiggler_head_geo:
+  type: SM64:GEO_LAYOUT
+  offset: 0xC000030
+  symbol: wiggler_head_geo

@@ -1,0 +1,71 @@
+:config:
+  autopads: false
+  compression:
+    offset: 0x1F2200
+  segments:
+    - [ 0x8, 0x1F2200 ]
+  header:
+    header:
+      - '#include "sm64.h"'
+      - '#include "breakable_box/geo.h"'
+
+breakable_box_seg8_lights_08011A80:
+  type: LIGHTS
+  size: 24
+  offset: 0x11A78
+  symbol: breakable_box_seg8_lights_08011A80
+
+crazy_box_surface:
+  type: TEXTURE
+  size: 2048
+  width: 32
+  height: 32
+  offset: 0x11A90
+  format: RGBA16
+  symbol: breakable_box_seg8_texture_08011A90
+
+cork_box_surface:
+  type: TEXTURE
+  size: 2048
+  width: 32
+  height: 32
+  offset: 0x12290
+  format: RGBA16
+  symbol: breakable_box_seg8_texture_08012290
+
+breakable_box_seg8_vertex_08012A90:
+  type: VTX
+  count: 15
+  offset: 0x12A90
+  symbol: breakable_box_seg8_vertex_08012A90
+
+breakable_box_seg8_vertex_08012B80:
+  type: VTX
+  count: 11
+  offset: 0x12B80
+  symbol: breakable_box_seg8_vertex_08012B80
+
+breakable_box_seg8_dl_08012C30:
+  type: GFX
+  offset: 0x12C30
+  symbol: breakable_box_seg8_dl_08012C30
+
+breakable_box_seg8_dl_08012CD8:
+  type: GFX
+  offset: 0x12CD8
+  symbol: breakable_box_seg8_dl_08012CD8
+
+breakable_box_seg8_dl_08012D20:
+  type: GFX
+  offset: 0x12D20
+  symbol: breakable_box_seg8_dl_08012D20
+
+breakable_box_seg8_dl_08012D48:
+  type: GFX
+  offset: 0x12D48
+  symbol: breakable_box_seg8_dl_08012D48
+
+breakable_box_seg8_collision_08012D70:
+  type: SM64:COLLISION
+  offset: 0x12D70
+  symbol: breakable_box_seg8_collision_08012D70

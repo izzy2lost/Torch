@@ -32,6 +32,9 @@ import java.io.InputStream;
 
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = "TorchConverter";
+    private static final String CONFIG_STARSHIP = "starship";
+    private static final String CONFIG_SPAGHETTI = "spaghetti";
+    private static final String CONFIG_GHOSTSHIP = "ghostship";
     
     private Button selectRomButton;
     private Button selectOutputButton;
@@ -50,7 +53,7 @@ public class MainActivity extends AppCompatActivity {
     private String romFilePath;
     private String configDirPath;
     private String outputDirPath;
-    private String selectedConfigType = "starship"; // Default to starship
+    private String selectedConfigType = CONFIG_STARSHIP; // Default to starship
     
     // Native method declarations
     public native String convertRomToO2R(String romPath, String outputPath, String configPath);
@@ -132,11 +135,14 @@ public class MainActivity extends AppCompatActivity {
         // Set up radio group listener to automatically load config
         configRadioGroup.setOnCheckedChangeListener((group, checkedId) -> {
             if (checkedId == R.id.starshipRadio) {
-                selectedConfigType = "starship";
+                selectedConfigType = CONFIG_STARSHIP;
                 Log.i(TAG, "Selected configuration: Starship (Star Fox 64)");
             } else if (checkedId == R.id.spaghettiRadio) {
-                selectedConfigType = "spaghetti";
+                selectedConfigType = CONFIG_SPAGHETTI;
                 Log.i(TAG, "Selected configuration: Spaghetti Kart (Mario Kart 64)");
+            } else if (checkedId == R.id.ghostshipRadio) {
+                selectedConfigType = CONFIG_GHOSTSHIP;
+                Log.i(TAG, "Selected configuration: Ghostship (Super Mario 64)");
             }
             // Automatically load the selected configuration
             autoLoadSelectedConfig();
@@ -162,12 +168,11 @@ public class MainActivity extends AppCompatActivity {
     }
     
     private void autoLoadSelectedConfig() {
-        // Automatically load the selected configuration (starship or spaghetti)
+        // Automatically load the selected configuration (starship, spaghetti, or ghostship)
         try {
             configDirPath = copyBundledAssetsToInternalStorage();
             
-            String configName = selectedConfigType.equals("starship") ? 
-                "Starship (Star Fox 64)" : "Spaghetti Kart (Mario Kart 64)";
+            String configName = getConfigDisplayName();
             configStatusText.setText("Config: " + configName + " (auto-loaded)");
             updateConvertButtonState();
             
@@ -193,7 +198,7 @@ public class MainActivity extends AppCompatActivity {
             // Validate .z64 extension
             if (!fileName.toLowerCase().endsWith(".z64")) {
                 statusText.setText("Error: Only .z64 format ROMs are supported");
-                String gameType = selectedConfigType.equals("starship") ? "Star Fox 64" : "Mario Kart 64";
+                String gameType = getGameDisplayName();
                 Toast.makeText(this, "Please select a .z64 format " + gameType + " ROM", Toast.LENGTH_LONG).show();
                 return;
             }
@@ -265,8 +270,7 @@ public class MainActivity extends AppCompatActivity {
             // Copy bundled assets to internal storage based on selected configuration
             configDirPath = copyBundledAssetsToInternalStorage();
             
-            String configName = selectedConfigType.equals("starship") ? 
-                "Starship (Star Fox 64)" : "Spaghetti Kart (Mario Kart 64)";
+            String configName = getConfigDisplayName();
             configStatusText.setText("Config: " + configName + " assets loaded");
             updateConvertButtonState();
             
@@ -312,6 +316,58 @@ public class MainActivity extends AppCompatActivity {
         // For now, we'll still copy to app directory but remember the user's choice
         // In the future, we could use DocumentFile to write directly to the selected location
         return getExternalFilesDir(null).getAbsolutePath();
+    }
+
+    private String getConfigDisplayName() {
+        switch (selectedConfigType) {
+            case CONFIG_STARSHIP:
+                return "Starship (Star Fox 64)";
+            case CONFIG_SPAGHETTI:
+                return "Spaghetti Kart (Mario Kart 64)";
+            case CONFIG_GHOSTSHIP:
+                return "Ghostship (Super Mario 64)";
+            default:
+                return selectedConfigType;
+        }
+    }
+
+    private String getConfigShortName() {
+        switch (selectedConfigType) {
+            case CONFIG_STARSHIP:
+                return "Starship";
+            case CONFIG_SPAGHETTI:
+                return "Spaghetti Kart";
+            case CONFIG_GHOSTSHIP:
+                return "Ghostship";
+            default:
+                return selectedConfigType;
+        }
+    }
+
+    private String getGameDisplayName() {
+        switch (selectedConfigType) {
+            case CONFIG_STARSHIP:
+                return "Star Fox 64";
+            case CONFIG_SPAGHETTI:
+                return "Mario Kart 64";
+            case CONFIG_GHOSTSHIP:
+                return "Super Mario 64";
+            default:
+                return "N64";
+        }
+    }
+
+    private String getOutputFileName() {
+        switch (selectedConfigType) {
+            case CONFIG_STARSHIP:
+                return "sf64.o2r";
+            case CONFIG_SPAGHETTI:
+                return "mk64.o2r";
+            case CONFIG_GHOSTSHIP:
+                return "sm64.o2r";
+            default:
+                return "game.o2r";
+        }
     }
     
 
@@ -560,7 +616,7 @@ public class MainActivity extends AppCompatActivity {
                 // Use selected output directory or default to app directory
                 File outputDir = outputDirPath != null ? new File(outputDirPath) : getExternalFilesDir(null);
                 // Use appropriate filename based on selected configuration
-                String outputFileName = selectedConfigType.equals("starship") ? "sf64.o2r" : "mk64.o2r";
+                String outputFileName = getOutputFileName();
                 String outputPath = new File(outputDir, outputFileName).getAbsolutePath();
                 Log.i(TAG, "ROM path: " + romFilePath);
                 Log.i(TAG, "Output path: " + outputPath);
@@ -600,7 +656,7 @@ public class MainActivity extends AppCompatActivity {
                         // Double-check if the file was actually created
                         File outputFile = new File(outputPath);
                         if (outputFile.exists() && outputFile.length() > 0) {
-                            String configName = selectedConfigType.equals("starship") ? "Starship" : "Spaghetti Kart";
+                            String configName = getConfigShortName();
                             
                             // If user selected a custom output directory, copy the file there
                             if (selectedOutputUri != null) {

@@ -201,9 +201,9 @@ std::optional<std::shared_ptr<IParsedData>> SF64::MessageFactory::parse(std::vec
             mesgStr << whitespace;
             whitespace = "";
         }
-        if(enumCode.starts_with("_")){
+        if (!enumCode.empty() && enumCode[0] == '_') {
             mesgStr << enumCode.substr(1);
-        } else if(ASCIITable.contains(enumCode)){
+        } else if(ASCIITable.find(enumCode) != ASCIITable.end()){
             mesgStr << ASCIITable[enumCode];
         }
 
@@ -276,9 +276,9 @@ std::optional<std::shared_ptr<IParsedData>> SF64::MessageFactory::parse_modding(
                     mesgStr << whitespace;
                     whitespace = "";
                 }
-                if(enumCode.starts_with("_")){
+                if (!enumCode.empty() && enumCode[0] == '_') {
                     mesgStr << enumCode.substr(1);
-                } else if(ASCIITable.contains(enumCode)){
+                } else if(ASCIITable.find(enumCode) != ASCIITable.end()){
                     mesgStr << ASCIITable[enumCode];
                 }
             }

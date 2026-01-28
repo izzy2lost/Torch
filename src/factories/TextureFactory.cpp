@@ -286,7 +286,7 @@ std::optional<std::shared_ptr<IParsedData>> TextureFactory::parse(std::vector<ui
         return std::nullopt;
     }
 
-    if(!sTextureFormats.contains(format)) {
+    if (sTextureFormats.find(format) == sTextureFormats.end()) {
         return std::nullopt;
     }
 
@@ -362,7 +362,7 @@ std::optional<std::shared_ptr<IParsedData>> TextureFactory::parse_modding(std::v
         return std::nullopt;
     }
 
-    if(!sTextureFormats.contains(format)) {
+    if (sTextureFormats.find(format) == sTextureFormats.end()) {
         return std::nullopt;
     }
 

@@ -1429,7 +1429,11 @@ BZFILE * bzopen_or_bzdopen
 #ifdef BZ_STRICT_ANSI
       fp = NULL;
 #else
+#if defined(_WIN32) || defined(OS2) || defined(MSDOS)
       fp = _fdopen(fd,mode2);
+#else
+      fp = fdopen(fd,mode2);
+#endif
 #endif
    }
    if (fp == NULL) return NULL;

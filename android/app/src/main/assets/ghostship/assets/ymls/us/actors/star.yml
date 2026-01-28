@@ -1,0 +1,72 @@
+:config:
+  autopads: false
+  compression:
+    offset: 0x201410
+  segments:
+    - [ 0x3, 0x201410 ]
+  header:
+    header:
+      - '#include "sm64.h"'
+      - '#include "star/geo.h"'
+
+star_seg3_lights_0302A6D8:
+  type: LIGHTS
+  size: 24
+  offset: 0x2A6D8
+  symbol: star_seg3_lights_0302A6D8
+
+star_surface:
+  type: TEXTURE
+  size: 2048
+  width: 32
+  height: 32
+  offset: 0x2A6F0
+  format: RGBA16
+  symbol: star_seg3_texture_0302A6F0
+
+star_eye:
+  type: TEXTURE
+  size: 2048
+  width: 32
+  height: 32
+  offset: 0x2AEF0
+  format: RGBA16
+  symbol: star_seg3_texture_0302AEF0
+
+star_seg3_vertex_0302B6F0:
+  type: VTX
+  count: 12
+  offset: 0x2B6F0
+  symbol: star_seg3_vertex_0302B6F0
+
+star_seg3_dl_0302B7B0:
+  type: GFX
+  offset: 0x2B7B0
+  symbol: star_seg3_dl_0302B7B0
+
+star_seg3_dl_0302B870:
+  type: GFX
+  offset: 0x2B870
+  symbol: star_seg3_dl_0302B870
+
+star_seg3_lights_0302B908:
+  type: LIGHTS
+  size: 24
+  offset: 0x2B908
+  symbol: star_seg3_lights_0302B908
+
+star_seg3_vertex_0302B920:
+  type: VTX
+  count: 10
+  offset: 0x2B920
+  symbol: star_seg3_vertex_0302B920
+
+star_seg3_dl_0302B9C0:
+  type: GFX
+  offset: 0x2B9C0
+  symbol: star_seg3_dl_0302B9C0
+
+star_seg3_dl_0302BA18:
+  type: GFX
+  offset: 0x2BA18
+  symbol: star_seg3_dl_0302BA18

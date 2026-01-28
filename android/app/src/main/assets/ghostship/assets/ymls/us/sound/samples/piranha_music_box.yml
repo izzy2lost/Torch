@@ -1,0 +1,3 @@
+00_music_box:
+  type: NAUDIO:V0:SAMPLE
+  id: 214

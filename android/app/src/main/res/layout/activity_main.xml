@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fillViewport="true"
+    android:scrollbars="vertical"
     android:background="@color/black">
 
 <LinearLayout
@@ -74,6 +75,15 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Spaghetti Kart (Mario Kart 64)"
+            android:textSize="14sp"
+            android:textColor="@color/primary_text"
+            android:buttonTint="@color/neon_yellow" />
+
+        <RadioButton
+            android:id="@+id/ghostshipRadio"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Ghostship (Super Mario 64)"
             android:textSize="14sp"
             android:textColor="@color/primary_text"
             android:buttonTint="@color/neon_yellow" />

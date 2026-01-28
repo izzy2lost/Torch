@@ -1,0 +1,132 @@
+:config:
+  external_files:
+    - "assets/ymls/us/sound/root.yml"
+    - "assets/ymls/us/sound/samples/bowser_organ.yml"
+    - "assets/ymls/us/sound/samples/course_start.yml"
+    - "assets/ymls/us/sound/samples/instruments.yml"
+    - "assets/ymls/us/sound/samples/piranha_music_box.yml"
+    - "assets/ymls/us/sound/samples/sfx_1.yml"
+    - "assets/ymls/us/sound/samples/sfx_4.yml"
+    - "assets/ymls/us/sound/samples/sfx_5.yml"
+    - "assets/ymls/us/sound/samples/sfx_6.yml"
+    - "assets/ymls/us/sound/samples/sfx_7.yml"
+    - "assets/ymls/us/sound/samples/sfx_9.yml"
+    - "assets/ymls/us/sound/samples/sfx_mario_peach.yml"
+    - "assets/ymls/us/sound/samples/sfx_mario.yml"
+    - "assets/ymls/us/sound/samples/sfx_terrain.yml"
+    - "assets/ymls/us/sound/samples/sfx_water.yml"
+
+00:
+  type: NAUDIO:V0:BANK
+  id: 0
+01_terrain:
+  type: NAUDIO:V0:BANK
+  id: 1
+02_water:
+  type: NAUDIO:V0:BANK
+  id: 2
+03:
+  type: NAUDIO:V0:BANK
+  id: 3
+04:
+  type: NAUDIO:V0:BANK
+  id: 4
+05:
+  type: NAUDIO:V0:BANK
+  id: 5
+06:
+  type: NAUDIO:V0:BANK
+  id: 6
+07:
+  type: NAUDIO:V0:BANK
+  id: 7
+08_mario:
+  type: NAUDIO:V0:BANK
+  id: 8
+09:
+  type: NAUDIO:V0:BANK
+  id: 9
+0A_mario_peach:
+  type: NAUDIO:V0:BANK
+  id: 10
+0B:
+  type: NAUDIO:V0:BANK
+  id: 11
+0C:
+  type: NAUDIO:V0:BANK
+  id: 12
+0D:
+  type: NAUDIO:V0:BANK
+  id: 13
+0E:
+  type: NAUDIO:V0:BANK
+  id: 14
+0F:
+  type: NAUDIO:V0:BANK
+  id: 15
+10:
+  type: NAUDIO:V0:BANK
+  id: 16
+11:
+  type: NAUDIO:V0:BANK
+  id: 17
+12:
+  type: NAUDIO:V0:BANK
+  id: 18
+13:
+  type: NAUDIO:V0:BANK
+  id: 19
+14_piranha_music_box:
+  type: NAUDIO:V0:BANK
+  id: 20
+15:
+  type: NAUDIO:V0:BANK
+  id: 21
+16_course_start:
+  type: NAUDIO:V0:BANK
+  id: 22
+17:
+  type: NAUDIO:V0:BANK
+  id: 23
+18:
+  type: NAUDIO:V0:BANK
+  id: 24
+19:
+  type: NAUDIO:V0:BANK
+  id: 25
+1A:
+  type: NAUDIO:V0:BANK
+  id: 26
+1B:
+  type: NAUDIO:V0:BANK
+  id: 27
+1C_endless_stairs:
+  type: NAUDIO:V0:BANK
+  id: 28
+1D_bowser_organ:
+  type: NAUDIO:V0:BANK
+  id: 29
+1E:
+  type: NAUDIO:V0:BANK
+  id: 30
+1F:
+  type: NAUDIO:V0:BANK
+  id: 31
+20:
+  type: NAUDIO:V0:BANK
+  id: 32
+21:
+  type: NAUDIO:V0:BANK
+  id: 33
+22:
+  type: NAUDIO:V0:BANK
+  id: 34
+23:
+  type: NAUDIO:V0:BANK
+  id: 35
+24:
+  type: NAUDIO:V0:BANK
+  id: 36
+25:
+  type: NAUDIO:V0:BANK
+  id: 37

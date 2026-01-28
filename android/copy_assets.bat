@@ -3,6 +3,7 @@ echo Copying configuration assets to Android project...
 
 set STARSHIP_PATH=C:\Users\izzyn\Downloads\Starship-main\Starship-main
 set SPAGHETTI_PATH=C:\Users\izzyn\Downloads\spaghetti-kart-main\spaghetti-kart-main
+set GHOSTSHIP_PATH=C:\Users\izzyn\Downloads\Ghostship-main\Ghostship-main
 set ANDROID_ASSETS=app\src\main\assets
 
 echo.
@@ -79,7 +80,41 @@ if not exist "%SPAGHETTI_PATH%" (
         xcopy "%SPAGHETTI_PATH%\include" "%TARGET_DIR%\include" /E /I /H /Y
     )
 
-    echo Spaghetti Kart assets copied successfully!
+echo Spaghetti Kart assets copied successfully!
+)
+
+echo.
+echo === Copying Ghostship (Super Mario 64) Assets ===
+set TARGET_DIR=%ANDROID_ASSETS%\ghostship
+
+REM Check if Ghostship directory exists
+if not exist "%GHOSTSHIP_PATH%" (
+    echo Warning: Ghostship directory not found at %GHOSTSHIP_PATH%
+    echo Skipping Ghostship assets...
+) else (
+    REM Create/clean Ghostship assets directory
+    if exist "%TARGET_DIR%" (
+        echo Removing existing Ghostship assets...
+        rmdir /s /q "%TARGET_DIR%"
+    )
+    mkdir "%TARGET_DIR%"
+
+    REM Copy Ghostship files
+    echo Copying Ghostship config.yml...
+    copy "%GHOSTSHIP_PATH%\config.yml" "%TARGET_DIR%\config.yml"
+
+    echo Copying Ghostship assets/ymls folder...
+    if exist "%GHOSTSHIP_PATH%\assets\ymls" (
+        xcopy "%GHOSTSHIP_PATH%\assets\ymls" "%TARGET_DIR%\assets\ymls" /E /I /H /Y
+    )
+
+    echo Copying Ghostship include/assets folder...
+    if exist "%GHOSTSHIP_PATH%\include\assets" (
+        mkdir "%TARGET_DIR%\include"
+        xcopy "%GHOSTSHIP_PATH%\include\assets" "%TARGET_DIR%\include\assets" /E /I /H /Y
+    )
+
+    echo Ghostship assets copied successfully!
 )
 
 echo.

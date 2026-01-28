@@ -1,6 +1,6 @@
 # Torch Android Converter
 
-A simple Android app that converts N64 ROM files (.z64, .n64, .v64) to O2R format for use with Starship and Spaghetti Cart ports.
+A simple Android app that converts N64 ROM files (.z64, .n64, .v64) to O2R format for use with Starship, Spaghetti Kart, and Ghostship ports.
 
 ## Features
 
@@ -38,8 +38,9 @@ The app builds the original Torch C++ codebase as a native library using:
 1. Launch the app
 2. Tap "Select ROM File" and choose your N64 ROM (.z64, .n64, .v64)
 3. Tap "Select Starship/Spaghetti Config Folder" and choose the root directory of either:
-   - The Starship repository (for SM64)
-   - The Spaghetti Cart repository (for other games)
+   - The Starship repository (for Star Fox 64)
+   - The Spaghetti Kart repository (for Mario Kart 64)
+   - The Ghostship repository (for Super Mario 64)
 4. Tap "Convert to O2R" to start the conversion
 5. The O2R file will be saved to your Downloads/torch_output/ folder
 
@@ -47,8 +48,9 @@ The app builds the original Torch C++ codebase as a native library using:
 
 The app requires the config.yml and asset metadata files from the respective game repositories:
 
-- **For Super Mario 64**: Use the Starship repository
-- **For other games**: Use the Spaghetti Cart repository
+- **For Super Mario 64**: Use the Ghostship repository
+- **For Star Fox 64**: Use the Starship repository
+- **For Mario Kart 64**: Use the Spaghetti Kart repository
 
 These repositories contain the necessary YAML files and asset definitions that Torch needs to properly extract and convert the ROM data.
 

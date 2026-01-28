@@ -28,7 +28,7 @@ uint64_t RegisterAutoGen(uint32_t ptr, std::string type) {
 void StoreFunc(uint32_t vram) {
     return;
 
-    if(!gFunctionMap.contains(vram)) {
+    if (gFunctionMap.find(vram) == gFunctionMap.end()) {
         return;
     }
 
