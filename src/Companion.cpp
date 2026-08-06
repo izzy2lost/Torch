@@ -2531,7 +2531,6 @@ std::optional<YAML::Node> Companion::AddAsset(YAML::Node asset) {
         }
     }
 
-    auto rom = this->GetRomData();
     auto factory = this->GetFactory(type);
 
     if (!factory.has_value()) {
